@@ -19,6 +19,8 @@
 #ifndef __STUMPLESS_PRIVATE_SEVERITY_H
 #  define __STUMPLESS_PRIVATE_SEVERITY_H
 
+#  include "private/error.h"  // Include error handling functions
+
 /**
  * Gets the value of the severity from the given prival. This will be equivalent
  * to the STUMPLESS_SEVERITY_*_VALUE constant for the severity.
@@ -40,7 +42,31 @@
 int
 get_severity( int prival );
 
+/**
+ * Checks if the given severity is invalid. If it is invalid, it raises an error.
+ *
+ * **Thread Safety: MT-Safe**
+ * This function is thread safe.
+ *
+ * **Async Signal Safety: AS-Safe**
+ * This function is safe to call from signal handlers.
+ *
+ * **Async Cancel Safety: AC-Safe**
+ * This function is safe to call from threads that may be asynchronously
+ * cancelled.
+ *
+ * @param severity The severity value to check.
+ *
+ * @return 1 if the severity is invalid, 0 if it is valid.
+ */
 int
-severity_is_invalid( int severity );
+severity_is_invalid( int severity ) {
+  if( severity < 0 || severity > 7 ) {
+    raise_error( STUMPLESS_INVALID_SEVERITY );  // Raise an error if invalid
+    return 1;
+  }
+
+  return 0;
+}
 
 #endif /* __STUMPLESS_PRIVATE_SEVERITY_H */
