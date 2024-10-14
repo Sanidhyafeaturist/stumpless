@@ -72,7 +72,7 @@ COLD_FUNCTION
 void raise_invalid_param(void);
 
 COLD_FUNCTION
-void raise_invalid_severity(int severity);  // Use the enum here
+void raise_invalid_severity(enum severity_level severity);  // Use the enum here
 
 COLD_FUNCTION
 void raise_journald_failure(int code);
