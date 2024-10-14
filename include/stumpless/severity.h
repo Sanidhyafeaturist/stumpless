@@ -180,21 +180,6 @@ extern "C" {
 #  endif
 
 /**
- * All possible severity codes available to log entries.
- *
- * In versions prior to 2.0.0, these values were simply \#define symbols. They
- * have been changed to an enum to clearly convey proper usage.
- *
- * See STUMPLESS_FOREACH_SEVERITY() and STUMPLESS_GENERATE_ENUM() for how the
- * enumeration is actually defined.
- *
- * @since release v2.0.0.
- */
-enum stumpless_severity {
-  STUMPLESS_FOREACH_SEVERITY( STUMPLESS_GENERATE_ENUM )
-};
-
-/**
  * Gets the string representation of the given severity.
  *
  * This is a string literal that should not be modified or freed by the caller.
