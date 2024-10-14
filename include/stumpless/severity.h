@@ -29,10 +29,14 @@
 #  include <stumpless/config.h>
 #  include <stumpless/generator.h>
 #  include <stddef.h>
+#  include <stumpless/error.h>  // Include error handling header
 
 #  ifdef STUMPLESS_SYSLOG_H_COMPATIBLE
 #    include <syslog.h>
 #  endif
+
+/** Error code for invalid severity */
+#define STUMPLESS_INVALID_SEVERITY -1
 
 /** Creates a severity mask for the provided severity. */
 #  ifdef STUMPLESS_SYSLOG_H_COMPATIBLE
@@ -191,28 +195,6 @@ enum stumpless_severity {
 };
 
 /**
- * The default stumpless ansi terminal color values
- */
-#define STUMPLESS_SEVERITY_EMERG_DEFAULT_COLOR   "\33[31;1m"
-#define STUMPLESS_SEVERITY_ALERT_DEFAULT_COLOR   "\33[31;1m"
-#define STUMPLESS_SEVERITY_CRIT_DEFAULT_COLOR    "\33[31m"
-#define STUMPLESS_SEVERITY_ERR_DEFAULT_COLOR     "\33[31m"
-#define STUMPLESS_SEVERITY_WARNING_DEFAULT_COLOR "\33[33m"
-#define STUMPLESS_SEVERITY_NOTICE_DEFAULT_COLOR  "\33[32m"
-#define STUMPLESS_SEVERITY_INFO_DEFAULT_COLOR    "\33[37m"
-#define STUMPLESS_SEVERITY_DEBUG_DEFAULT_COLOR   "\33[0m"
-
-
-
-/**
- * Equivalent to the DEBUG severity. Trace level messages include extra
- * information, but do not have a distinct severity value in log entries.
- *
- * @since release v2.1.0
- */
-#  define STUMPLESS_SEVERITY_TRACE STUMPLESS_SEVERITY_DEBUG
-
-/**
  * Gets the string representation of the given severity.
  *
  * This is a string literal that should not be modified or freed by the caller.
@@ -230,6 +212,7 @@ enum stumpless_severity {
  * @param severity The severity to get the string from.
  *
  * @return The string representation of the given severity.
+ * If the severity is invalid, an error is set (STUMPLESS_INVALID_SEVERITY).
  */
 STUMPLESS_PUBLIC_FUNCTION
 const char *
@@ -250,43 +233,17 @@ stumpless_get_severity_string( enum stumpless_severity severity );
  *
  * @since release v2.1.0.
  *
- * @param severity_string The severity name to get the enum from.
+ * @param severity_string The severity string to get the enum value for.
  *
- * @return The enum integer corresponding to the given severity or -1 if
- * the string is not a valid severity name.
+ * @return The severity enum value corresponding to the given string.
+ * If the severity string is invalid, an error is set (STUMPLESS_INVALID_SEVERITY).
  */
 STUMPLESS_PUBLIC_FUNCTION
 enum stumpless_severity
-stumpless_get_severity_enum( const char *severity_string );
-
-/**
- * Gets the enum value corresponding to the given severity string in a buffer.
- *
- * **Thread Safety: MT-Safe**
- * This function is thread safe.
- *
- * **Async Signal Safety: AS-Safe**
- * This function is safe to call from signal handlers.
- *
- * **Async Cancel Safety: AC-Safe**
- * This function is safe to call from threads that may be asynchronously
- * cancelled.
- *
- * @since release v2.2.0.
- *
- * @param buffer The buffer containing the severity name to get the enum from.
- *
- * @param length The length of the buffer.
- *
- * @return The enum integer corresponding to the given severity or -1 if
- * the string is not a valid severity name.
- */
-STUMPLESS_PUBLIC_FUNCTION
-enum stumpless_severity
-stumpless_get_severity_enum_from_buffer(const char *buffer, size_t length);
+stumpless_get_severity_value( const char *severity_string );
 
 #  ifdef __cplusplus
-} /* extern "C" */
+}
 #  endif
 
 #endif /* __STUMPLESS_SEVERITY_H */
