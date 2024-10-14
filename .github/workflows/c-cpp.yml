@@ -29,3 +29,39 @@ jobs:
 
     - name: Package
       run: cpack --config build/CPackConfig.cmake
+
+    # Step: Check for Merge Conflicts
+    - name: Check for Merge Conflicts
+      id: conflict_check
+      run: |
+        if [ -n "$(git diff --name-only --diff-filter=U)" ]; then
+          echo "Merge conflicts detected!" >&2
+          exit 1
+        else
+          echo "No merge conflicts."
+        fi
+
+    # Step: Attempt to Resolve Merge Conflicts
+    - name: Attempt to Resolve Merge Conflicts
+      if: steps.conflict_check.outcome == 'failure'
+      run: |
+        echo "Attempting to resolve merge conflicts..."
+        
+        # Resolve merge conflicts automatically
+        git checkout --theirs .
+        
+        # Stage resolved files
+        git add .
+        
+        # Commit the resolved files
+        git commit -m "Automatically resolved merge conflicts"
+        
+        echo "Merge conflicts resolved."
+
+    # Step: Re-run Build and Tests after resolving conflicts
+    - name: Re-run Build and Tests
+      if: steps.conflict_check.outcome == 'failure'
+      run: |
+        cmake -S . -B build
+        cmake --build build --config Release
+        ctest --test-dir build --output-on-failure
