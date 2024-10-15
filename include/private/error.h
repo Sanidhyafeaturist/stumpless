@@ -42,6 +42,12 @@ COLD_FUNCTION
 void raise_element_not_found(void);
 
 COLD_FUNCTION
+void raise_error(enum stumpless_error_id id,
+                 const char *message,
+                 int code,
+                 const char *code_type)
+
+COLD_FUNCTION
 void raise_file_open_failure(void);
 
 COLD_FUNCTION
