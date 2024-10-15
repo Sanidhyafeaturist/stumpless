@@ -23,7 +23,7 @@
 #include <stumpless/error.h>
 #include "private/config/wrapper/locale.h"
 #include "private/config/wrapper/thread_safety.h"
-#include "private/error.h"
+#include "../include/private/error.h"
 #include "private/inthelper.h"
 #include "private/strhelper.h"
 
