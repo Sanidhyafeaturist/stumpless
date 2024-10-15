@@ -157,7 +157,7 @@ raise_argument_too_big( const char *message,
                arg_type );
 }
 
-void
+void 
 raise_error( enum stumpless_error_id id,
              const char *message,
              int code,
