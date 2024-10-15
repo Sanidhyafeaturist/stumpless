@@ -1,6 +1,9 @@
 #ifndef __STUMPLESS_COMMON_H
 #define __STUMPLESS_COMMON_H
 
+#include "error.h"
+
+
 // Common function declaration for error handling
 void raise_error(enum stumpless_error_id id, const char *message, int code, const char *code_type) {
 
