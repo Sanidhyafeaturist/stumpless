@@ -158,6 +158,20 @@ raise_argument_too_big( const char *message,
 }
 
 void
+raise_error( enum stumpless_error_id id,
+             const char *message,
+             int code,
+             const char *code_type ) {
+  last_error.id = id;
+  last_error.message = message;
+  last_error.code = code;
+  last_error.code_type = code_type;
+  error_valid = true;
+}
+
+
+
+void
 raise_duplicate_element( void ) {
   raise_error( STUMPLESS_DUPLICATE_ELEMENT,
                L10N_DUPLICATE_ELEMENT_ERROR_MESSAGE,
