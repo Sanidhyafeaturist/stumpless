@@ -19,7 +19,7 @@
 #ifndef __STUMPLESS_PRIVATE_SEVERITY_H
 #  define __STUMPLESS_PRIVATE_SEVERITY_H
 
-#  include "error.h"  // Include error handling functions
+#  include "common.h"  // Include error handling functions
 
 /**
  * Gets the value of the severity from the given prival. This will be equivalent
