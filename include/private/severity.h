@@ -20,7 +20,7 @@
 #  define __STUMPLESS_PRIVATE_SEVERITY_H
 
 // In include/private/private_header.h
-#include "../../src/error.h" // Adjust the path based on the directory structure
+#include "../../src/error.c" // Adjust the path based on the directory structure
 
 /**
  * Gets the value of the severity from the given prival. This will be equivalent
