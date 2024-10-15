@@ -20,7 +20,6 @@
 #define __STUMPLESS_PRIVATE_ERROR_H
 
 #include <stddef.h>
-#include <stumpless/error.h>
 #include "private/config.h"
 #include "private/severity.h"  // Include the severity enum
 
